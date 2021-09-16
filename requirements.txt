@@ -1,5 +1,5 @@
 beautifulsoup4==4.10.0
 bs4==0.0.1
 requests==2.24.0
-pyTelegramBotAPI==13.7
+python-telegram-bot==13.7
 Flask==2.0.1
