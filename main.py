@@ -1,11 +1,9 @@
 import telegram.ext
 import bot
-from flask import Flask,request
-
+import os
 with open('token.txt','r') as f:
     TOKEN = f.read()
 
-app = Flask(__name__)
 
 
 def start(update,context):
@@ -33,33 +31,21 @@ def handle_message(update,context):
         update.message.reply_text(links)
     update.message.reply_text("End Of Streaming Links")
 
-@app.route('/',methods=['POST','GET'])
-def index():
-    return webhook()
 
-def webhook():
-    bot = telegram.Bot(token=TOKEN)
-    if request.method == "POST":
-        update = telegram.Update.de_json(request.get_json(force=True),bot)
-        chat_id = update.effective_chat.id
-        text = update.message.text
-        first_name = update.effective_chat.first_name
-        bot.sendMessage(chat_id = chat_id,text=f"{text}{first_name}")
-        return 'ok'
-    return 'error'
+updater = telegram.ext.Updater(TOKEN,use_context=True)
 
-def main():
-    updater = telegram.ext.Updater(TOKEN,use_context=True)
+disp = updater.dispatcher
 
-    disp = updater.dispatcher
+PORT = int(os.environ.get('PORT', '8443'))
+updater = telegram.ext.Updater(TOKEN)
+disp.add_handler(telegram.ext.CommandHandler("start",start))
+disp.add_handler(telegram.ext.CommandHandler("help",help))
+disp.add_handler(telegram.ext.CommandHandler("streams",streams))
+disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters._All,handle_message))
+updater.start_webhook(listen="0.0.0.0",
+                      port=PORT,
+                      url_path=TOKEN,
+                      webhook_url="https://stream-bot.herokuapp.com/" + TOKEN)
 
-    disp.add_handler(telegram.ext.CommandHandler("start",start))
-    disp.add_handler(telegram.ext.CommandHandler("help",help))
-    disp.add_handler(telegram.ext.CommandHandler("streams",streams))
-    disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters._All,handle_message))
-
-    updater.start_polling()
-    updater.idle()
-
-if __name__ == '__main__':
-    app.run(debug=True)
+#updater.start_polling()
+updater.idle()
