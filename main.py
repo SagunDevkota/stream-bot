@@ -1,6 +1,6 @@
 import telegram.ext
 import bot
-from flask import Flask
+from flask import Flask,request
 
 with open('token.txt','r') as f:
     TOKEN = f.read()
@@ -32,6 +32,21 @@ def handle_message(update,context):
     for links in individual_link:
         update.message.reply_text(links)
     update.message.reply_text("End Of Streaming Links")
+
+@app.route('/',methods=['POST','GET'])
+def index():
+    return webhook()
+
+def webhook():
+    bot = telegram.Bot(token=TOKEN)
+    if request.method == "POST":
+        update = telegram.Update.de_json(request.get_json(force=True),bot)
+        chat_id = update.effective_chat.id
+        text = update.message.text
+        first_name = update.effective_chat.first_name
+        bot.sendMessage(chat_id = chat_id,text=f"{text}{first_name}")
+        return 'ok'
+    return 'error'
 
 def main():
     updater = telegram.ext.Updater(TOKEN,use_context=True)
