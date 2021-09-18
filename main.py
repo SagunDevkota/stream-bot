@@ -14,27 +14,43 @@ def help(update,context):
     """)
 
 def streams(update,context):
-    update.message.reply_text("Searching for available matches")
-    all_matches_name_list = bot.all_matches_name()
-    if(all_matches_name_list==None):
+    try:
+        update.message.reply_text("Searching for available matches")
+        all_matches_name_list = bot.all_matches_name()
+        link_str=''
+        if(all_matches_name_list==None):
+            update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin")
+            return None
+        for links in all_matches_name_list:
+            link_str+=links+'\n'
+        update.message.reply_text(link_str)
+        update.message.reply_text("End Of Detected Matches")
+    except:
         update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin")
-        return None
-    for matches_name in all_matches_name_list:
-        update.message.reply_text(matches_name)
-    update.message.reply_text("End Of Detected Matches")
 
 def handle_message(update,context):
-    update.message.reply_text("Searching for available streams")
-    individual_link = bot.selected_match(bot.all_matches_name(),update.message.text)
-    if(individual_link==None):
+    try:
+        update.message.reply_text("Searching for available streams")
+        link_str=''
+        sending_message=''
+        for chars in update.message.text:
+            if(chars=='@'):
+                break
+            sending_message+=chars
+        individual_link = bot.selected_match(bot.all_matches_name(),sending_message)
+        if(individual_link==None):
+            update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin")
+            return None
+        if(len(individual_link)==0):
+            update.message.reply_text("No links found. Links are updated 30min before match. If link is not found till Kick Off then contact admin")
+            return None
+        for links in individual_link:
+            link_str+=links+'\n\n'
+        update.message.reply_text(link_str)
+        update.message.reply_text("End Of Streaming Links")
+    except:
         update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin")
-        return None
-    if(len(individual_link)==0):
-        update.message.reply_text("No links found. Links are updated 30min before match. If link is not found till Kick Off then contact admin")
-        return None
-    for links in individual_link:
-        update.message.reply_text(links)
-    update.message.reply_text("End Of Streaming Links")
+
 
 
 updater = telegram.ext.Updater(TOKEN,use_context=True)
