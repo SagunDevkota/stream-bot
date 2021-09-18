@@ -1,10 +1,6 @@
 import telegram.ext
 import bot
-import os
-with open('token.txt','r') as f:
-    TOKEN = f.read()
-
-
+from config import TOKEN,PORT
 
 def start(update,context):
     update.message.reply_text("Welcome! to Football Story Bot")
@@ -36,8 +32,6 @@ updater = telegram.ext.Updater(TOKEN,use_context=True)
 
 disp = updater.dispatcher
 
-PORT = int(os.environ.get('PORT', '8443'))
-updater = telegram.ext.Updater(TOKEN)
 disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("help",help))
 disp.add_handler(telegram.ext.CommandHandler("streams",streams))
@@ -46,6 +40,4 @@ updater.start_webhook(listen="0.0.0.0",
                       port=PORT,
                       url_path=TOKEN,
                       webhook_url="https://stream-bot.herokuapp.com/" + TOKEN)
-
-#updater.start_polling()
 updater.idle()
