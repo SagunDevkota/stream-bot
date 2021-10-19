@@ -2,7 +2,7 @@ import requests
 import bs4
 def all_matches_name():
     try:    
-        res = requests.get("https://buffersports.com/homer17.php")
+        res = requests.get("https://buffersports.com/football_games")
         soup = bs4.BeautifulSoup(res.text,'lxml').find_all('ul',attrs={"class":"country-sales list-group list-group-flush container"})[0]
 
         all_match_name=[]
