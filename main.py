@@ -82,5 +82,8 @@ disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("help",help))
 disp.add_handler(telegram.ext.CommandHandler("streams",streams))
 disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.command,handle_message))
-updater.start_polling()
+updater.start_webhook(listen="0.0.0.0",
+                      port=PORT,
+                      url_path=TOKEN,
+                      webhook_url="https://stream-bot.herokuapp.com/" + TOKEN)
 updater.idle()
