@@ -6,7 +6,7 @@ from flask import Flask,request
 app = Flask(__name__)
 
 
-bot = telebot.TeleBot(token=config.TOKEN)
+bot = telebot.TeleBot(token=TOKEN)
 
 @bot.message_handler(commands=['start']) # welcome message handler
 def send_welcome(message):
@@ -84,7 +84,7 @@ def send_links(message):
 You have been banned from the service until further notice,
         """)
 
-@app.route('/' + config.TOKEN, methods=['POST'])
+@app.route('/' + TOKEN, methods=['POST'])
 def getMessage():
     json_string = request.get_data().decode('utf-8')
     update = telebot.types.Update.de_json(json_string)
@@ -95,9 +95,9 @@ def getMessage():
 @app.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://stream-bot.herokuapp.com/' + config.TOKEN)
+    bot.set_webhook(url='https://stream-bot.herokuapp.com/' + TOKEN)
     return "!", 200
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",debug=True)
+    app.run(host="0.0.0.0", port=PORT|5000)
