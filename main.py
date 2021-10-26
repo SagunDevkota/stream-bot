@@ -12,7 +12,7 @@ bot = telebot.TeleBot(token= TOKEN)
 def send_welcome(message):
     # bot.reply_to(message, message)
     id = message.from_user.id
-    if(id == 753971038 or id == -1001331327568):
+    if(id == 753971038 or message.sender_chat.message.sender_chat.id == -1001331327568):
         bot.reply_to(message,"Welcome! to Football Story Bot")
     else:
         bot.reply_to("""
@@ -23,7 +23,7 @@ You have been banned from the service until further notice,
 @bot.message_handler(commands=['help']) # help message handler
 def send_help(message):
     id = message.from_user.id
-    if(id == 753971038 or id == -1001331327568):
+    if(id == 753971038 or message.sender_chat.message.sender_chat.id == -1001331327568):
         bot.reply_to(message,"""
         The following commands are available:
         /start -> Welcome Message
@@ -39,7 +39,7 @@ You have been banned from the service until further notice,
 @bot.message_handler(commands=['streams']) # help message handler
 def send_streams(message):
     id = message.from_user.id
-    if(id == 753971038 or id == -1001331327568):
+    if(id == 753971038 or message.sender_chat.message.sender_chat.id == -1001331327568):
         bot.reply_to(message,"Searching for available matches")
         all_matches_name_list = bgbot.all_matches_name()
         link_str=''
@@ -59,7 +59,7 @@ You have been banned from the service until further notice,
 @bot.message_handler(regexp="^/") # help message handler
 def send_links(message):
     id = message.from_user.id
-    if(id == 753971038 or id == -1001331327568):
+    if(id == 753971038 or message.sender_chat.message.sender_chat.id == -1001331327568):
         bot.reply_to(message,"Searching for available streams")
         link_str=''
         sending_message=''
@@ -100,4 +100,4 @@ def webhook():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=PORT|5000)
+    app.run(host="0.0.0.0", port=PORT)
