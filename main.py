@@ -6,7 +6,7 @@ from flask import Flask,request
 app = Flask(__name__)
 
 
-bot = telebot.TeleBot(token=TOKEN)
+bot = telebot.TeleBot(token= TOKEN)
 
 @bot.message_handler(commands=['start']) # welcome message handler
 def send_welcome(message):
