@@ -1,6 +1,9 @@
 import telegram.ext
 import bot
 from config import TOKEN,PORT
+from flask import Flask
+
+server = Flask(__name__)
 
 def start(update,context):
     id = update.message.chat.id
@@ -74,16 +77,29 @@ def handle_message(update,context):
 You have been banned from the service until further notice,
         """)
 
-updater = telegram.ext.Updater(TOKEN,use_context=True)
+@server.route("/")
+def root():
+    updater = telegram.ext.Updater(TOKEN,use_context=True)
 
-disp = updater.dispatcher
+    disp = updater.dispatcher
 
-disp.add_handler(telegram.ext.CommandHandler("start",start))
-disp.add_handler(telegram.ext.CommandHandler("help",help))
-disp.add_handler(telegram.ext.CommandHandler("streams",streams))
-disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.command,handle_message))
-updater.start_webhook(listen="0.0.0.0",
+    disp.add_handler(telegram.ext.CommandHandler("start",start))
+    disp.add_handler(telegram.ext.CommandHandler("help",help))
+    disp.add_handler(telegram.ext.CommandHandler("streams",streams))
+    disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.command,handle_message))
+    updater.start_webhook(listen="0.0.0.0",
                       port=PORT,
                       url_path=TOKEN,
                       webhook_url="https://stream-bot.herokuapp.com/" + TOKEN)
-updater.idle()
+    return """
+    <html>
+    <head>
+    </head>
+    <body>
+    HI
+    </body>
+    </html>
+    """
+
+if(__name__ == "__main__"):
+    server.run(debug = True)
