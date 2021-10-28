@@ -3,7 +3,7 @@ import bot
 from config import TOKEN,PORT
 from flask import Flask
 
-server = Flask(__name__)
+app = Flask(__name__)
 
 def start(update,context):
     id = update.message.chat.id
@@ -77,7 +77,7 @@ def handle_message(update,context):
 You have been banned from the service until further notice,
         """)
 
-@server.route("/")
+@app.route("/")
 def root():
     updater = telegram.ext.Updater(TOKEN,use_context=True)
 
@@ -102,4 +102,4 @@ def root():
     """
 
 if(__name__ == "__main__"):
-    server.run(debug = True)
+    app.run(debug = True)
