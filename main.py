@@ -38,9 +38,9 @@ def processing(msg):
 
     if 'text' in msg:
         for entry in regex:
-            if re.match(entry, msg["text"]):
-                matches = re.match(entry, msg["text"]).groups()
-                parser(msg, list(matches))
+            if re.findall(entry, msg["text"]):
+                matches = re.findall(entry,msg["text"])
+                parser(msg, matches)
                 return
 
 
@@ -60,7 +60,8 @@ def webhook():
 regex = [
     r'^[!/](start)',
     r'^[!/](help)',
-    r'^[!/](streams)'
+    r'^[!/](streams)',
+    r'^[!/].*.vs.*'
 ]
 
 def parser(msg, matches):
@@ -71,7 +72,7 @@ def parser(msg, matches):
             bot.sendMessage(usr['id'],"Welcome! to Football Story Bot")
             return
 
-        if matches[0] == 'help':
+        elif matches[0] == 'help':
             bot.sendMessage(usr['id'], """
         The following commands are available:
         /start -> Welcome Message
@@ -79,7 +80,7 @@ def parser(msg, matches):
         /streams -> list of matches
         """)
             return
-        if matches[0] == 'streams':
+        elif matches[0] == 'streams':
             bot.sendMessage(usr['id'],"Searching for available matches")
             all_matches_name_list = botTel.all_matches_name()
             link_str=''
@@ -91,6 +92,22 @@ If problem persists then contact admin""")
                 link_str+=links+'\n'
             bot.sendMessage(usr['id'],link_str)
             bot.sendMessage(usr['id'],"End Of Detected Matches")
+		
+	else:
+	    bot.sendMessage("Searching for available streams")
+	    link_str=''
+	    sending_message=matches[0]
+	    individual_link = bot.selected_mbot.sendMessageatch(botTel.all_matches_name(),sending_message)
+	    if(individual_link==None):
+		bot.sendMessage("We are experiencing problem.Try again later, if problem persists then contact admin hai tw")
+		return None
+	    if(len(individual_link)==0):
+		bot.sendMessage("No links found. Links are updated 30min before match. If link is not found till Kick Off then contact admin")
+		return None
+	    for links in individual_link:
+		link_str+=links+'\n\n'
+	    bot.sendMessage(link_str)
+	    bot.sendMessage("End Of Streaming Links")
 
 if __name__ == "__main__":
 	time.sleep(5)
