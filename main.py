@@ -98,7 +98,7 @@ def parser(msg, matches):
                     bot.sendMessage(usr['id'],"Searching for available streams")
                     link_str=''
                     sending_message=matches[0]
-                    individual_link = bot.selected_mbot.sendMessageatch(botTel.all_matches_name(),sending_message)
+                    individual_link = botTel.selected_match(botTel.all_matches_name(),sending_message)
                     if(individual_link==None):
                         bot.sendMessage(usr['id'],"We are experiencing problem.Try again later, if problem persists then contact admin hai tw")
                         return None
