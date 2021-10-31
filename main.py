@@ -7,7 +7,7 @@ from telepot.namedtuple import *
 
 USERNAME = "hostingsd2"
 SECRET = 'abc'
-URL = f"https://{USERNAME}.pythonanywhere.com/{SECRET}"
+URL = f"https://stream-bot.herokuapp.com//{SECRET}"
 
 
 bot = telepot.Bot(config.TOKEN)
