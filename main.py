@@ -8,7 +8,7 @@ import time
 
 
 URL = f"https://stream-bot.herokuapp.com/"
-
+bot = telepot.Bot(config.TOKEN)
 
 
 
@@ -93,7 +93,6 @@ If problem persists then contact admin""")
             bot.sendMessage(usr['id'],"End Of Detected Matches")
 
 if __name__ == "__main__":
-	bot = telepot.Bot(config.TOKEN)
 	time.sleep(5)
 	bot.setWebhook()
 	time.sleep(5)
