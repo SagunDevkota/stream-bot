@@ -2,6 +2,7 @@ import telepot
 import re
 import config
 import botTel
+import time
 from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
 
@@ -113,5 +114,8 @@ def parser(msg, matches):
             bot.sendMessage(usr['id'],"You are banned.")
 
 if __name__ == "__main__":
+    time.sleep(5)
+    bot.setWebhook()
+    time.sleep(5)
     bot.setWebhook(URL, max_connections=10)
     app.run()
