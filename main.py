@@ -9,7 +9,7 @@ USERNAME = "hostingsd2"
 SECRET = 'abc'
 URL = f"https://{USERNAME}.pythonanywhere.com/{SECRET}"
 
-telepot.api.set_proxy('http://proxy.server:3128')
+
 bot = telepot.Bot(config.TOKEN)
 bot.setWebhook(URL, max_connections=10)
 
