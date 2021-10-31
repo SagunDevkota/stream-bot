@@ -38,7 +38,7 @@ def processing(msg):
     if 'text' in msg:
         for entry in regex:
             if re.findall(entry, msg["text"]):
-                matches = re.findall(entry, msg["text"]).groups()
+                matches = re.findall(entry, msg["text"])
                 parser(msg, matches)
                 return
 
