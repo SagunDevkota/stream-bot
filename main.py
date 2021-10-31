@@ -5,13 +5,11 @@ import botTel
 from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
 
-USERNAME = "hostingsd2"
-SECRET = 'abc'
-URL = f"https://{USERNAME}.pythonanywhere.com/{SECRET}"
+URL = f"https://stream-bot.herokuapp.com/"
 
-telepot.api.set_proxy('http://proxy.server:3128')
+
 bot = telepot.Bot(config.TOKEN)
-bot.setWebhook(URL, max_connections=10)
+
 
 def processing(msg):
     if 'chat' in msg and msg['chat']['type'] == 'channel':
@@ -39,9 +37,9 @@ def processing(msg):
 
     if 'text' in msg:
         for entry in regex:
-            if re.match(entry, msg["text"]):
-                matches = re.match(entry, msg["text"]).groups()
-                parser(msg, list(matches))
+            if re.findall(entry, msg["text"]):
+                matches = re.findall(entry, msg["text"]).groups()
+                parser(msg, matches)
                 return
 
 
@@ -61,7 +59,8 @@ def webhook():
 regex = [
     r'^[!/](start)',
     r'^[!/](help)',
-    r'^[!/](streams)'
+    r'^[!/](streams)',
+    r'^[!/].*.vs.*'
 ]
 
 def parser(msg, matches):
@@ -111,4 +110,5 @@ If problem persists then contact admin""")
                 bot.sendMessage("End Of Streaming Links")
 
 if __name__ == "__main__":
+    bot.setWebhook(URL, max_connections=10)
     app.run()
