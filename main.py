@@ -45,7 +45,7 @@ def processing(msg):
 
 app = Flask(__name__)
 
-@app.route(f'/{SECRET}', methods=["POST"])
+@app.route('/', methods=["POST"])
 def webhook():
     update = request.get_json()
     if "message" in update:
