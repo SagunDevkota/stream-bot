@@ -96,5 +96,5 @@ if __name__ == "__main__":
 	time.sleep(5)
 	bot.setWebhook()
 	time.sleep(5)
-	bot.setWebhook('https://pymariachi-xinayder.rhcloud.com' + SECRET_URL)
+	bot.setWebhook('https://stream-bot.herokuapp.com/')
 	app.run()
