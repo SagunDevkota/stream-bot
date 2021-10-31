@@ -4,13 +4,14 @@ import config
 import botTel
 from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
-import time
 
+USERNAME = "hostingsd2"
+SECRET = 'abc'
+URL = f"https://{USERNAME}.pythonanywhere.com/{SECRET}"
 
-URL = f"https://stream-bot.herokuapp.com/"
+telepot.api.set_proxy('http://proxy.server:3128')
 bot = telepot.Bot(config.TOKEN)
-
-
+bot.setWebhook(URL, max_connections=10)
 
 def processing(msg):
     if 'chat' in msg and msg['chat']['type'] == 'channel':
@@ -38,15 +39,15 @@ def processing(msg):
 
     if 'text' in msg:
         for entry in regex:
-            if re.findall(entry, msg["text"]):
-                matches = re.findall(entry,msg["text"])
-                parser(msg, matches)
+            if re.match(entry, msg["text"]):
+                matches = re.match(entry, msg["text"]).groups()
+                parser(msg, list(matches))
                 return
 
 
 app = Flask(__name__)
 
-@app.route('/', methods=["POST"])
+@app.route(f'/{SECRET}', methods=["POST"])
 def webhook():
     update = request.get_json()
     if "message" in update:
@@ -60,8 +61,7 @@ def webhook():
 regex = [
     r'^[!/](start)',
     r'^[!/](help)',
-    r'^[!/](streams)',
-    r'^[!/].*.vs.*'
+    r'^[!/](streams)'
 ]
 
 def parser(msg, matches):
@@ -92,26 +92,23 @@ If problem persists then contact admin""")
                 link_str+=links+'\n'
             bot.sendMessage(usr['id'],link_str)
             bot.sendMessage(usr['id'],"End Of Detected Matches")
-		
-	else:
-	    bot.sendMessage("Searching for available streams")
-	    link_str=''
-	    sending_message=matches[0]
-	    individual_link = bot.selected_mbot.sendMessageatch(botTel.all_matches_name(),sending_message)
-	    if(individual_link==None):
-		bot.sendMessage("We are experiencing problem.Try again later, if problem persists then contact admin hai tw")
-		return None
-	    if(len(individual_link)==0):
-		bot.sendMessage("No links found. Links are updated 30min before match. If link is not found till Kick Off then contact admin")
-		return None
-	    for links in individual_link:
-		link_str+=links+'\n\n'
-	    bot.sendMessage(link_str)
-	    bot.sendMessage("End Of Streaming Links")
+
+        else:
+            if(len(matches)!=0):
+                bot.sendMessage("Searching for available streams")
+                link_str=''
+                sending_message=matches[0]
+                individual_link = bot.selected_mbot.sendMessageatch(botTel.all_matches_name(),sending_message)
+                if(individual_link==None):
+                    bot.sendMessage("We are experiencing problem.Try again later, if problem persists then contact admin hai tw")
+                    return None
+                if(len(individual_link)==0):
+                    bot.sendMessage("No links found. Links are updated 30min before match. If link is not found till Kick Off then contact admin")
+                    return None
+                for links in individual_link:
+                    link_str+=links+'\n\n'
+                bot.sendMessage(link_str)
+                bot.sendMessage("End Of Streaming Links")
 
 if __name__ == "__main__":
-	time.sleep(5)
-	bot.setWebhook()
-	time.sleep(5)
-	bot.setWebhook('https://stream-bot.herokuapp.com/')
-	app.run()
+    app.run()
