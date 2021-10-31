@@ -5,9 +5,8 @@ import botTel
 from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
 
-USERNAME = "hostingsd2"
-SECRET = 'abc'
-URL = f"https://stream-bot.herokuapp.com//{SECRET}"
+
+URL = f"https://stream-bot.herokuapp.com/"
 
 
 bot = telepot.Bot(config.TOKEN)
@@ -47,7 +46,7 @@ def processing(msg):
 
 app = Flask(__name__)
 
-@app.route(f'/{SECRET}', methods=["POST"])
+@app.route('/', methods=["POST"])
 def webhook():
     update = request.get_json()
     if "message" in update:
