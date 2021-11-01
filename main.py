@@ -4,6 +4,7 @@ import config
 import botTel
 import random
 import time
+import string
 from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
 
