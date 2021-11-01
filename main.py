@@ -2,14 +2,10 @@ import telepot
 import re
 import config
 import botTel
-import random
 import time
-import string
 from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
 
-SECRET = ''.join(random.choice(string.ascii_letters) for x in range(20))
-URL = f"https://stream-bot.herokuapp.com/{SECRET}"
 
 
 bot = telepot.Bot(config.TOKEN)
@@ -49,7 +45,7 @@ def processing(msg):
 
 app = Flask(__name__)
 
-@app.route(f'/{SECRET}', methods=["POST"])
+@app.route('/', methods=["POST"])
 def webhook():
     update = request.get_json()
     if "message" in update:
