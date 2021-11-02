@@ -7,7 +7,7 @@ from flask import Flask, render_template, session, url_for, redirect, request
 from telepot.namedtuple import *
 
 
-
+URL = 'https://stream-bot.herokuapp.com/'
 bot = telepot.Bot(config.TOKEN)
 
 
