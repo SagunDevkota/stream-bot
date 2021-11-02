@@ -1,6 +1,7 @@
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
+import config
 PORT = int(os.environ.get('PORT', 5000))
 
 # Enable logging
@@ -8,7 +9,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
-TOKEN = '2037133170:AAEnJxKFTeCaHyAPTksPSDUNOR7LEb9KXDY'
+
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
@@ -33,7 +34,7 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater(TOKEN, use_context=True)
+    updater = Updater(config.TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -51,8 +52,8 @@ def main():
     # Start the Bot
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path=TOKEN)
-    updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + TOKEN)
+                          url_path=config.TOKEN)
+    updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + config.TOKEN)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
