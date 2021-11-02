@@ -8,7 +8,7 @@ from telepot. namedtuple import *
 URL = f"https://stream-bot.herokuapp.com/"
 
 
-bot = telepot. Bot(config. TOKENS)
+bot = telepot. Bot(config. TOKEN)
 
 
 def processing(msg):
