@@ -4,4 +4,3 @@ gunicorn == 20.1.0
 requests == 2.26.0
 lxml == 4.6.3
 telepot == 12.7
-python-telegram-bot
