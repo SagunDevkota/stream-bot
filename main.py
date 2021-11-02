@@ -65,12 +65,11 @@ regex = [
 
 def parser(msg, matches):
     usr = msg['from']
-
-    #if(usr['id']== 753971038 or usr['id'] == -1001331327568):
-    if(1==1):
+    bot.sendMessage(usr['id'],msg ['type'])
+    if(usr['id']== 753971038 or usr['id'] == -1001331327568):
         if msg['type'] == "text":
             if matches[0] == 'start':
-                bot.sendMessage(usr['id'],usr['id'])
+                bot.sendMessage(usr['id'],"Welcome to Football Story Bot")
                 return
 
             elif matches[0] == 'help':
