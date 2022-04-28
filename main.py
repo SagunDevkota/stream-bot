@@ -61,7 +61,7 @@ def handle_message(update,context):
             sending_message+=chars
         individual_link = bot.selected_match(bot.all_matches_name(),sending_message)
         if(individual_link==None):
-            update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin hai tw")
+            update.message.reply_text("Match Doesnot Exist make sure you searched the match using /streams command")
             return None
         if(len(individual_link)==0):
             update.message.reply_text("No links found. Links are updated 30min before match. If link is not found till Kick Off then contact admin")
