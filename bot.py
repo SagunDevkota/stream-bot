@@ -1,6 +1,5 @@
 import requests
 import bs4
-import lxml
 def all_matches_name():
     try: 
         res = requests.get("https://totalsportek.pro/football/")

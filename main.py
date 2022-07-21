@@ -1,8 +1,6 @@
 import telegram.ext
 import bot
 from config import TOKEN,PORT
-import requests
-import bs4
 
 
 def start(update,context):
@@ -35,9 +33,6 @@ def streams(update,context):
     id = update.message.chat.id
     if(id == 753971038 or id == -1001331327568):
         update.message.reply_text("Searching for available matches")
-        res = requests.get("https://totalsportek.pro/football/")
-        soup = bs4.BeautifulSoup(res.text,'html.parser').find_all('div',attrs={"class":"top-tournament"})
-        update.message.reply_text(str(soup)[:100])
         all_matches_name_list = bot.all_matches_name()
         link_str=''
         if(all_matches_name_list==None):
