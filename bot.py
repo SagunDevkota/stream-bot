@@ -25,8 +25,7 @@ def all_matches_name():
 
 
         return all_matches
-    except:
-        return None
+    except Exception as e: return e
 
 def selected_match(all_matches,user_match_name):
     try:
