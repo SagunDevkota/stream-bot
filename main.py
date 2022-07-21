@@ -88,4 +88,3 @@ updater.start_webhook(listen="0.0.0.0",
                     port=PORT,
                     url_path=TOKEN,
                     webhook_url="https://stream-bot-production.up.railway.app/" + TOKEN)
-updater.idle()
