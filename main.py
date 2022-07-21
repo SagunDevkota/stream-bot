@@ -1,7 +1,8 @@
 import telegram.ext
 import bot
 from config import TOKEN,PORT
-
+import requests
+import bs4
 
 
 def start(update,context):
