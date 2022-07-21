@@ -34,6 +34,9 @@ def streams(update,context):
     id = update.message.chat.id
     if(id == 753971038 or id == -1001331327568):
         update.message.reply_text("Searching for available matches")
+        res = requests.get("https://totalsportek.pro/football/")
+        soup = bs4.BeautifulSoup(res.text,'lxml').find_all('div',attrs={"class":"top-tournament"})
+        update.message.reply_text(str(soup)[:100])
         all_matches_name_list = bot.all_matches_name()
         link_str=''
         if(all_matches_name_list==None):
