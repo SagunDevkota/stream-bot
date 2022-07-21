@@ -34,7 +34,7 @@ def streams(update,context):
     if(id == 753971038 or id == -1001331327568):
         update.message.reply_text("Searching for available matches")
         all_matches_name_list = bot.all_matches_name()
-        update.message.reply_text(all_matches_name_list)
+        update.message.reply_text(str(all_matches_name_list))
         link_str=''
         if(all_matches_name_list==None):
             update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin")
