@@ -27,7 +27,7 @@ def selected_match(all_matches,user_match_name):
         all_links = 0
         users_match = requests.get(all_matches[user_match_name])
 
-        all_contents = bs4.BeautifulSoup(users_match.text,'lxml').find_all("tr")
+        all_contents = bs4.BeautifulSoup(users_match.text,'html.parser').find_all("tr")
         all_individual_match_link = []
         for content in all_contents:
             link_content = content.find_all("a")
