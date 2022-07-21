@@ -38,6 +38,7 @@ def streams(update,context):
         if(all_matches_name_list==None):
             update.message.reply_text("We are experiencing problem.Try again later, if problem persists then contact admin")
             return None
+        loop_count = 0
         for links in all_matches_name_list:
             link_str+=links+'\n'
             loop_count = loop_count+1

@@ -4,7 +4,6 @@ def all_matches_name():
     try: 
         res = requests.get("https://totalsportek.pro/football/")
         soup = bs4.BeautifulSoup(res.text,'html.parser').find_all('div',attrs={"class":"top-tournament"})
-
         all_match_link = []
         all_match_name = []
         for league in soup:
@@ -19,11 +18,7 @@ def all_matches_name():
                         matchName+='_'
                 all_match_name.append((f'/{matchName}'))
                 all_match_link.append(link['href'])
-
-
         all_matches = dict(zip(all_match_name,all_match_link))
-
-
         return all_matches
     except Exception as e: return e
 
