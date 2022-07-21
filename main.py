@@ -3,6 +3,7 @@ import bot
 from config import TOKEN,PORT
 import requests
 import bs4
+import lxml
 
 
 def start(update,context):
