@@ -1,6 +1,6 @@
 import requests
 import bs4
-from os import BASE_URL
+from config import BASE_URL
 def all_matches_name():
     try: 
         res = requests.get(BASE_URL)
