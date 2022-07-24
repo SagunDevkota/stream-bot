@@ -1,11 +1,11 @@
 import telegram.ext
 import bot
-from config import TOKEN,PORT
+from config import TOKEN,PORT,USER1,USER2,TEST_USER
 
 
 def start(update,context):
     id = update.message.chat.id
-    if(id == 753971038 or id == -1001331327568 or id == -798146107):
+    if(id == USER1 or id == USER2 or id == TEST_USER):
         update.message.reply_text("Welcome! to Football Story Bot")
     else:
         update.message.reply_text("""
@@ -15,7 +15,7 @@ You have been banned from the service until further notice,
 
 def help(update,context):
     id = update.message.chat.id
-    if(id == 753971038 or id == -1001331327568 or id == -798146107):
+    if(id == USER1 or id == USER2 or id == TEST_USER):
         update.message.reply_text("""
         The following commands are available:
         /start -> Welcome Message
@@ -31,7 +31,7 @@ You have been banned from the service until further notice,
 
 def streams(update,context):
     id = update.message.chat.id
-    if(id == 753971038 or id == -1001331327568 or id == -798146107):
+    if(id == USER1 or id == USER2 or id == TEST_USER):
         update.message.reply_text("Searching for available matches")
         all_matches_name_list = bot.all_matches_name()
         link_str=''
@@ -55,7 +55,7 @@ You have been banned from the service until further notice,
 
 def handle_message(update,context):
     id = update.message.chat.id
-    if(id == 753971038 or id == -1001331327568 or id == -798146107):
+    if(id == USER1 or id == USER2 or id == TEST_USER):
         update.message.reply_text("Searching for available streams")
         link_str=''
         sending_message=''
