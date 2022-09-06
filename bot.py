@@ -4,13 +4,13 @@ from config import BASE_URL
 def all_matches_name():
     try: 
         res = requests.get(BASE_URL)
-        soup = bs4.BeautifulSoup(res.text,'html.parser').find_all('div',attrs={"class":"top-tournament"})
+        soup = bs4.BeautifulSoup(res.text,'html.parser').find_all('div',{'class':'col-md-12 border rounded'})
         all_match_link = []
         all_match_name = []
         for league in soup:
-            links = league.find_all("a")
+            links = league.findChildren("a" , recursive=False)
             for link in links:
-                temp = link["title"]
+                temp = link.find_all("img")[0]['alt']+"VS"+child.find_all("img")[1]['alt']
                 matchName = ""
                 for chars in temp.upper():
                     if(ord(chars)>=65 and ord(chars)<=90):
