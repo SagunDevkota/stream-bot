@@ -10,7 +10,7 @@ def all_matches_name():
         for league in soup:
             links = league.findChildren("a" , recursive=False)
             for link in links:
-                temp = link.find_all("img")[0]['alt']+"VS"+child.find_all("img")[1]['alt']
+                temp = link.find_all("img")[0]['alt']+"VS"+link.find_all("img")[1]['alt']
                 matchName = ""
                 for chars in temp.upper():
                     if(ord(chars)>=65 and ord(chars)<=90):
