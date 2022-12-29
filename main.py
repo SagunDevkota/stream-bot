@@ -91,6 +91,6 @@ disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.command,handle
 updater.start_webhook(listen="0.0.0.0",
                     port=PORT,
                     url_path=TOKEN,
-                    webhook_url="https://football-stream-bot.herokuapp.com/" + TOKEN)
+                    webhook_url="https://web-production-104b.up.railway.app/" + TOKEN)
 updater.start_polling()
 updater.idle()
