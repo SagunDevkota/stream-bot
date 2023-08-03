@@ -28,14 +28,15 @@ def selected_match(all_matches,user_match_name):
         all_links = 0
         users_match = requests.get(all_matches[user_match_name])
 
-        all_contents = bs4.BeautifulSoup(users_match.text,'html.parser').find_all("tr")
+        all_contents = bs4.BeautifulSoup(users_match.text,'html.parser').find_all("div",attrs={"class":"data-row"})
+        print(all_contents[0]['onclick'].split("'")[1])
         all_individual_match_link = []
         for content in all_contents:
-            link_content = content.find_all("a")
+            link_content = content['onclick'].split("'")[1]
             if(len(link_content) == 0):
                 continue
             all_links = all_links+1
-            all_individual_match_link.append(link_content[0]['href'])
+            all_individual_match_link.append(link_content)
             if(all_links>=15):
                 break
         return all_individual_match_link
